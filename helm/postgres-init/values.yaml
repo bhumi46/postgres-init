@@ -284,7 +284,8 @@ databases:
     branch: develop
 
   mosip_esignet:
-    enabled: false
+    enabled: true
+    dbname: mosip_esignetmock
     host: "postgres-postgresql"
     port: 5432
     su:
@@ -295,6 +296,7 @@ databases:
     dml: 1
     repoUrl: https://github.com/mosip/esignet.git
     branch: develop
+    dbdir: mosip_esignet
 
   mosip_mockidentitysystem:
     enabled: false
