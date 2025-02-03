@@ -6,9 +6,9 @@ echo "Cloning "$GIT_BRANCH "of repo" $GIT_REPO_URL "for" $MOSIP_DB_NAME "db_scri
 
 git clone --depth 1 --branch $GIT_BRANCH $GIT_REPO_URL
 
-echo "Sucessfully cloned the repository"
+echo "Successfully cloned the repository"
 
-echo "extracting db_scripts"
+echo "Extracting db_scripts"
 
 git_repo_name="$(basename "$GIT_REPO_URL" .git)"
 
@@ -20,8 +20,14 @@ find . -type f ! -path "./db_scripts/*" -exec rm -f {} \;
 
 echo "Extracted only db_scripts"
 
-cd db_scripts/$MOSIP_DB_DIR_NAME
-
-echo "Executing db_script"
-
-bash deploy.sh
+if [ "$CREATE_ARCHIVE_DB" = "true" ]; then
+    echo "Creating archive database"
+    cd db_scripts/$MOSIP_ARCHIVE_DB_DIR_NAME
+    echo "Executing archive db_script"
+    bash deploy.sh
+else
+    echo "Creating main database"
+    cd db_scripts/$MOSIP_MAIN_DB_DIR_NAME
+    echo "Executing main db_script"
+    bash deploy.sh
+fi
