@@ -1,6 +1,8 @@
 #!/bin/bash
 
 set -e
+# Default CREATE_ARCHIVE_DB to false if not set
+CREATE_ARCHIVE_DB=${CREATE_ARCHIVE_DB:-false}
 
 echo "Cloning "$GIT_BRANCH "of repo" $GIT_REPO_URL "for" $MOSIP_DB_NAME "db_scripts"
 
