@@ -1,0 +1,28 @@
+{{- if .Values.databases.mosip_archive.enabled }}
+{{- range $componentName, $component := .Values.databases.mosip_archive.components }}
+{{- if $component.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-archive-{{ $componentName }}-env-config
+  namespace: {{ $.Release.Namespace }}
+  labels: {{- include "common.labels.standard" $ | nindent 4 }}
+    app.kubernetes.io/component: postgres
+    {{- if $.Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" $.Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if $.Values.commonAnnotations }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" $.Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
+data:
+  MOSIP_DB_NAME: mosip_archive
+  DB_SERVERIP: {{ $.Values.databases.mosip_archive.host | quote }}
+  DB_PORT: {{ $.Values.databases.mosip_archive.port | quote }}
+  SU_USER: {{ $.Values.databases.mosip_archive.su_user | quote }}
+  GIT_REPO_URL: {{ $component.repoUrl | quote }}
+  GIT_BRANCH: {{ $component.branch | quote }}
+  DML_FLAG: {{ $component.dml | quote }}
+---
+{{- end }}
+{{- end }}
+{{- end }}

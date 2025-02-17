@@ -1,0 +1,44 @@
+{{- if .Values.databases.mosip_archive.enabled }}
+{{- range $componentName, $component := .Values.databases.mosip_archive.components }}
+{{- if $component.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-archive-{{ $componentName }}-init-job
+  labels:
+    {{- include "postgres-init.labels" $ | nindent 4 }}
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        {{- include "postgres-init.selectorLabels" $ | nindent 8 }}
+        app.kubernetes.io/name: db-archive-{{ $componentName }}-init-job
+        sidecar.istio.io/inject: "false"
+    spec:
+      {{- with $.Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "postgres-init.serviceAccountName" $ }}
+      securityContext:
+        {{- toYaml $.Values.jobSecurityContext | nindent 8 }}
+      restartPolicy: Never
+      containers:
+        - name: {{ $.Chart.Name }}
+          securityContext:
+            {{- toYaml $.Values.securityContext | nindent 12 }}
+          image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag | default $.Chart.AppVersion }}"
+          imagePullPolicy: {{ $.Values.image.pullPolicy }}
+          env:
+            - name: CREATE_ARCHIVE_DB
+              value: "true"
+          envFrom:
+              - configMapRef:
+                  name: db-archive-{{ $componentName }}-env-config
+              - secretRef:
+                  name: archive-db-secrets
+---
+{{- end }}
+{{- end }}
+{{- end }}

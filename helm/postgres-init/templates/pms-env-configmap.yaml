@@ -21,4 +21,5 @@ data:
   ENV_VERSION_FLAG: {{ .Values.databases.mosip_pms.ENV_VERSION_FLAG | quote }}
   GIT_REPO_URL: {{ .Values.databases.mosip_pms.repoUrl | quote }}
   GIT_BRANCH: {{ .Values.databases.mosip_pms.branch | quote }}
+  MOSIP_MAIN_DB_DIR_NAME: {{ .Values.databases.mosip_pms.dbdir | quote }}
 {{- end }}

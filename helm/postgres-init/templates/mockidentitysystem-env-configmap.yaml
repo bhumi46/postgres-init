@@ -20,4 +20,5 @@ data:
   DML_FLAG: {{ .Values.databases.mosip_mockidentitysystem.dml | quote }}
   GIT_REPO_URL: {{ .Values.databases.mosip_mockidentitysystem.repoUrl | quote }}
   GIT_BRANCH: {{ .Values.databases.mosip_mockidentitysystem.branch | quote }}
+  MOSIP_MAIN_DB_DIR_NAME: {{ .Values.databases.mosip_mockidentitysystem.dbdir | quote }}
 {{- end }}

@@ -20,4 +20,5 @@ data:
   DML_FLAG: {{ .Values.databases.mosip_resident.dml | quote }}
   GIT_REPO_URL: {{ .Values.databases.mosip_resident.repoUrl | quote }}
   GIT_BRANCH: {{ .Values.databases.mosip_resident.branch | quote }}
+  MOSIP_MAIN_DB_DIR_NAME: {{ .Values.databases.mosip_resident.dbdir | quote }}
 {{- end }}

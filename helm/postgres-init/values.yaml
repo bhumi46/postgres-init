@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: mosipqa/postgres-init
+  repository: bn46/postgres-init
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: develop
@@ -87,6 +87,7 @@ dbUserPasswords:
 databases:
   mosip_master:
     enabled: false
+    dbdir: mosip_master
     host: "postgres-postgresql"
     port: 5432
     su:
@@ -100,6 +101,7 @@ databases:
 
   mosip_audit:
     enabled: false
+    dbdir: mosip_audit
     host: "postgres-postgresql"
     port: 5432
     su:
@@ -113,6 +115,7 @@ databases:
 
   mosip_keymgr:
     enabled: false
+    dbdir: mosip_keymgr
     host: "postgres-postgresql"
     port: 5432
     su:
@@ -126,6 +129,7 @@ databases:
 
   mosip_kernel:
     enabled: false
+    dbdir: mosip_kernel
     host: "postgres-postgresql"
     port: 5432
     su:
@@ -139,6 +143,7 @@ databases:
 
   mosip_idmap:
     enabled: false
+    dbdir: mosip_idmap
     host: "postgres-postgresql"
     port: 5432
     su:
@@ -152,6 +157,7 @@ databases:
 
   mosip_prereg:
     enabled: false
+    dbdir: mosip_prereg
     host: "postgres-postgresql"
     port: 5432
     su:
@@ -165,6 +171,7 @@ databases:
 
   mosip_idrepo:
     enabled: false
+    dbdir: mosip_idrepo
     host: "postgres-postgresql"
     port: 5432
     su:
@@ -178,6 +185,7 @@ databases:
 
   mosip_ida:
     enabled: false
+    dbdir: mosip_ida
     host: "postgres-postgresql"
     port: 5432
     su:
@@ -191,6 +199,7 @@ databases:
 
   mosip_credential:
     enabled: false
+    dbdir: mosip_credential
     host: "postgres-postgresql"
     port: 5432
     su:
@@ -202,8 +211,9 @@ databases:
     repoUrl: https://github.com/mosip/id-repository.git
     branch: develop
 
-  mosip_regprc:
+  mosip_regprc:  
     enabled: false
+    dbdir: mosip_regprc
     host: "postgres-postgresql"
     port: 5432
     su:
@@ -217,6 +227,7 @@ databases:
 
   mosip_pms:
     enabled: false
+    dbdir: mosip_pms
     host: "postgres-postgresql"
     port: 5432
     # Note: This flag is used update datashare domain in partner policies according to deployment version( i.e v2/v3 )
@@ -233,6 +244,7 @@ databases:
 
   mosip_hotlist:
     enabled: false
+    dbdir: mosip_hotlist
     host: "postgres-postgresql"
     port: 5432
     su:
@@ -246,6 +258,7 @@ databases:
 
   mosip_resident:
     enabled: false
+    dbdir: mosip_resident
     host: "postgres-postgresql"
     port: 5432
     su:
@@ -259,6 +272,7 @@ databases:
 
   mosip_toolkit:
     enabled: false
+    dbdir: mosip_toolkit
     host: "postgres-postgresql"
     port: 5432
     su:
@@ -272,6 +286,7 @@ databases:
 
   mosip_digitalcard:
     enabled: false
+    dbdir: mosip_digitalcard
     host: "postgres-postgresql"
     port: 5432
     su:
@@ -284,8 +299,8 @@ databases:
     branch: develop
 
   mosip_esignet:
-    enabled: true
-    dbname: mosip_esignetmock
+    enabled: false
+    dbdir: mosip_esignet
     host: "postgres-postgresql"
     port: 5432
     su:
@@ -296,10 +311,10 @@ databases:
     dml: 1
     repoUrl: https://github.com/mosip/esignet.git
     branch: develop
-    dbdir: mosip_esignet
-
+    
   mosip_mockidentitysystem:
     enabled: false
+    dbdir: mosip_mockidentitysystem
     host: "postgres-postgresql"
     port: 5432
     su:
@@ -313,6 +328,7 @@ databases:
 
   mosip_otp:
     enabled: false
+    dbdir: mosip_otp
     host: "postgres-postgresql"
     port: 5432
     su:
@@ -326,6 +342,7 @@ databases:
 
   mosip_certify:
     enabled: false
+    dbdir: mosip_certify
     host: "postgres-postgresql"
     port: 5432
     su:
@@ -336,3 +353,29 @@ databases:
     dml: 1
     repoUrl: https://github.com/mosip/inji-certify.git
     branch: develop
+
+  mosip_archive:
+    enabled: false
+    dbdir: mosip_archive
+    host: "postgres-postgresql"
+    port: 5432
+    su_user: "postgres"
+    su_user_pwd: ""
+    db_pwd: ""
+    archive_db_password: ""
+    components:
+      audit:
+        enabled: true
+        repoUrl: https://github.com/mosip/audit.git
+        branch: develop
+        dml: 0
+      idrepo:
+        enabled: true
+        repoUrl: https://github.com/mosip/id-repository.git
+        branch: develop
+        dml: 0
+      kernel:
+        enabled: false
+        repoUrl: https://github.com/mosip/commons.git
+        branch: develop
+        dml: 0

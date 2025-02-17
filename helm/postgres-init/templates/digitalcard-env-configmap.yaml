@@ -14,6 +14,7 @@ metadata:
   {{- end }}
 data:
   MOSIP_DB_NAME: mosip_digitalcard
+  MOSIP_MAIN_DB_DIR_NAME: {{ .Values.databases.mosip_digitalcard.dbdir | quote }}
   DB_SERVERIP: {{ .Values.databases.mosip_digitalcard.host | quote }}
   DB_PORT: {{ .Values.databases.mosip_digitalcard.port | quote }}
   SU_USER: {{ .Values.databases.mosip_digitalcard.su.user | quote }}
